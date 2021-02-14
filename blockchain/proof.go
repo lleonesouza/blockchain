@@ -53,6 +53,17 @@ func ToHex(num int64) []byte {
 	return buff.Bytes()
 }
 
+// Validate the proof of work
+func (pow *ProofOfWork) Validate() bool {
+	var intHash big.Int
+	data := pow.InitData(pow.Block.Nonce)
+
+	hash := sha256.Sum256(data)
+	intHash.SetBytes(hash[:])
+
+	return intHash.Cmp(pow.Target) == -1
+}
+
 // Run the proof of work
 func (pow *ProofOfWork) Run() (int, []byte) {
 	var intHash big.Int
