@@ -8,13 +8,18 @@ import (
 )
 
 func main() {
-	chain := blockchain.Init()
+
+	chain := blockchain.InitBlockChain()
 
 	chain.AddBlock("First Block after Genesis")
 	chain.AddBlock("Secibd Block after Genesis")
 	fmt.Println()
 	fmt.Println()
-	for _, block := range chain.Blocks {
+
+	iter := chain.Iterator()
+
+	for {
+		block := iter.Next()
 		fmt.Printf("Previous Hash: %x\n", block.PrevHash)
 		fmt.Printf("Data in Block: %x\n", block.Data)
 		fmt.Printf("Hash: %x\n", block.Hash)
@@ -23,6 +28,10 @@ func main() {
 		fmt.Printf("PoW: %s\n", strconv.FormatBool(pow.Validate()))
 
 		fmt.Println("")
+
+		if len(block.PrevHash) == 0 {
+			break
+		}
 	}
 
 }

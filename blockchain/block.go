@@ -32,12 +32,6 @@ func Genesis() *Block {
 
 }
 
-// Init the BlockChain
-func Init() *BlockChain {
-	return &BlockChain{[]*Block{Genesis()}}
-
-}
-
 // Serialize the Block in bytes
 func (b *Block) Serialize() []byte {
 	var res bytes.Buffer
